@@ -33,24 +33,6 @@ class APIHandler @Inject constructor(baseUrl: String) {
         handler = retrofit.create(APICallMethods::class.java)
     }
 
-//    companion object {
-//        private var instance: APIHandler? = null
-//
-//        /**
-//         * Gets instance.
-//         * @return the instance of APIHandler
-//         */
-//        fun getInstance(): APIHandler {
-//            if (instance == null) {
-//                synchronized(APIHandler::class.java) {
-//                    if (instance == null) {
-//                        instance = APIHandler(Constants.BASE_URL)
-//                    }
-//                }
-//            }
-//            return instance!!
-//        }
-//    }
 
 
 }

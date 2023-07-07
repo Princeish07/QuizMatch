@@ -3,9 +3,11 @@ package com.quizmatch.app.data.local.pref
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.quizmatch.app.data.local.pref.SharedPreferencesKeys.Companion.ACCESS_TOKEN
+import com.google.gson.Gson
+import com.quizmatch.app.data.local.pref.SharedPreferencesKeys.Companion.SCORE
 import com.quizmatch.app.data.local.pref.SharedPreferencesKeys.Companion.SHAREPRE_NAME
 import com.quizmatch.app.data.local.pref.SharedPreferencesKeys.Companion.USER_PROFILE
+import com.quizmatch.app.data.model.firebase.User
 import javax.inject.Inject
 
 
@@ -13,19 +15,33 @@ class PrefManager
 @Inject constructor() : SharedPreferencesKeys {
     var pref: SharedPreferences? = null
 
+
+
     /**
-     * Access token
+     * User profile
      *
-     * Get or set user access token to hit REST apis
+     * Get or set user profile details
      */
-    var accessToken: String
-        get() = pref!!.getString(ACCESS_TOKEN, "")!!
-        set(accessToken) {
-            pref!!.edit().putString(ACCESS_TOKEN, accessToken).apply()
+    var userProfile: User?
+        get() = (if (pref!!.getString(USER_PROFILE, "") != "") {
+            Gson().fromJson(pref!!.getString(USER_PROFILE, ""), User::class.java)
+        } else {
+            null
+        })
+        set(userProfile) {
+            pref!!.edit().putString(USER_PROFILE, Gson().toJson(userProfile)).apply()
         }
 
-
-
+    /**
+     * Score
+     *
+     * Get or set user score to hit REST apis
+     */
+    var score: Int
+        get() = pref!!.getInt(SCORE, 0)!!
+        set(accessToken) {
+            pref!!.edit().putInt(SCORE, score).apply()
+        }
 
     /**
      * init shared preference
@@ -46,7 +62,6 @@ class PrefManager
     fun clearPrefData() {
         pref!!.edit()
             .remove(USER_PROFILE)
-            .remove(ACCESS_TOKEN)
             .apply()
     }
 

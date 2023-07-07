@@ -6,7 +6,19 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="empty_email">Please enter email</string>
+
+    <string name="invalid_email">Please enter valid email</string>
+    <string name="empty_password">Please enter password</string>
+
+    <string name="invalid_password">Password characters must be greater than 6</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="login_success">"Logged in successfully"</string>
+    <string name="hindi">Hindi</string>
+    <string name="question_list_failed">"Question List Api failed"</string>
+    <string name="next">Next</string>
+    <string name="india_don_t_have_nation_language">India don\'t have nation language</string>
+    <string name="tamil">Tamil</string>
+    <string name="english">English</string>
+
 </resources>

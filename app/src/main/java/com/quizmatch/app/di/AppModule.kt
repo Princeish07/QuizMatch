@@ -1,9 +1,12 @@
 package com.quizmatch.app.di
 
 import android.content.Context
-import com.quizmatch.app.Repository.FirebaseAuthRepo
-import com.quizmatch.app.Repository.FirebaseAuthRepoImp
-import com.quizmatch.app.base.QuizMatchApplication
+import com.policypal.app.data.remote.FirebaseDatabaseRepositoryImpl
+import com.quizmatch.app.Repository.FirebaseAuth.FirebaseAuthRepo
+import com.quizmatch.app.Repository.FirebaseAuth.FirebaseAuthRepoImp
+import com.quizmatch.app.Repository.FirebaseFirestoreDatabase.FirebaseDatabaseRepository
+import com.quizmatch.app.Repository.question.QuestionRepo
+import com.quizmatch.app.Repository.question.QuestionRepoImp
 import com.quizmatch.app.data.local.pref.PrefManager
 import com.quizmatch.app.data.remote.APICallMethods
 import com.quizmatch.app.data.remote.APIHandler
@@ -38,9 +41,15 @@ object AppModule {
     fun getFirebaseAuthRepo(apiCallMethods: APICallMethods): FirebaseAuthRepo {
         return FirebaseAuthRepoImp(apiCallMethods)
     }
+
     @Provides
     @Singleton
-    fun getViewModel(firebaseAuthRepo: FirebaseAuthRepo,prefManager: PrefManager): LandingActivityViewModel {
-        return LandingActivityViewModel(firebaseAuthRepo,prefManager)
+    fun getFirebaseFirestoreDatabase(): FirebaseDatabaseRepository {
+        return FirebaseDatabaseRepositoryImpl()
+    }
+    @Provides
+    @Singleton
+    fun getQuestionRepo(): QuestionRepo {
+        return QuestionRepoImp()
     }
 }
