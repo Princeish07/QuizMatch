@@ -156,12 +156,23 @@ class FirebaseDatabaseRepositoryImpl : FirebaseDatabaseRepository {
 
     override fun updateScore(
         matchId:String,
-        score: String?,
+        score: Int?,
         userId:String,
-        onSuccess: (User) -> Unit,
+        onSuccess: (Int) -> Unit,
         onError: (Exception?) -> Unit
     ) {
-//database.collection(MATCH_COLLECTION).document(matchId).collection(score)
+
+database.collection(MATCH_COLLECTION).document(matchId).collection(SCORE_DB_KEY).document(userId)
+    .update(SCORE_DB_KEY,score).addOnSuccessListener {
+
+            onSuccess(score!!)
+
+
+    }
+    .addOnFailureListener{
+        onError(it)
+
+    }
 
 
 

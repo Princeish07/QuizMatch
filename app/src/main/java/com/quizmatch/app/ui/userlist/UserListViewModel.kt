@@ -21,7 +21,7 @@ class UserListViewModel @Inject constructor(
     var scoreUpdate = MutableLiveData<Boolean>()
     val questionListResponse = MutableLiveData<QuestionListResponse>()
     val promptMessage = MutableLiveData<Any>()
-    var questionIndex: Int = 0
+    val loader = MutableLiveData<Boolean>()
     var opponentUser = MutableLiveData<User>()
     var matchId = MutableLiveData<String>()
     lateinit var questionResult: QuestionListResponse.Result
@@ -29,9 +29,14 @@ class UserListViewModel @Inject constructor(
 
 
     fun getUserList(){
+        loader.value = true
     firebaseFirestoreDatabase.getPlayerList(userId = prefManager.userProfile?.user_id!!, onSuccess = {
         userListResponse.value = it.toMutableList()
+        loader.value = false
+
     }, onError = {
+        loader.value = false
+
         promptMessage.value = R.string.invalid_user_list
 
     })
@@ -39,19 +44,23 @@ class UserListViewModel @Inject constructor(
     }
     fun createMatch(itemDetail: User) {
         val p = prefManager.userProfile?.matchId?.intersect(itemDetail.matchId.toSet())
+        prefManager.score = 0
         opponentUser.value = itemDetail
         if(p?.isEmpty()!!){
             firebaseFirestoreDatabase.createMatch(userID = prefManager.userProfile?.user_id!!, opponentId = itemDetail.user_id, onSuccess = {
                 prefManager.userProfile?.matchId?.toMutableList()?.add(it)
                 matchId.value = it
+                loader.value = false
+
             }, onError = {
                 promptMessage.value = R.string.unable_create_match
+                loader.value = false
+
 
             })
         }else{
             matchId.value = p.first()
-
-            promptMessage.value = R.string.room_Exits
+            loader.value = false
         }
 
 

@@ -52,7 +52,7 @@ class LandingActivityViewModel @Inject constructor(private val firebaseAuthRepo:
     }
     //endregion
     fun login(email:String, password:String) {
-        //loader.value = false
+        loader.value = true
         if (isDataValid(email, password)) {
             firebaseAuthRepo.logIn(email = email,
                 password = password,
@@ -60,13 +60,13 @@ class LandingActivityViewModel @Inject constructor(private val firebaseAuthRepo:
                 onSuccess = {
                     promptMessage.value = R.string.login_success
                  //   loader.value = false
-                    loginSuccess.value = true
+                    loginSuccess.value = false
                     prefManager.userProfile = it
 
                 },
                 onError = {
                     promptMessage.value = R.string.login_failed
-                   // loader.value = false
+                    loader.value = false
 
                 })
         }

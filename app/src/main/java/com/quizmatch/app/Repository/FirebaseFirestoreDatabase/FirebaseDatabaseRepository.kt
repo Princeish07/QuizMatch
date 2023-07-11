@@ -31,9 +31,9 @@ interface FirebaseDatabaseRepository {
      */
     fun updateScore(
         matchId:String,
-        score: String?,
+        score: Int?,
         userId:String,
-        onSuccess: (User) -> Unit,
+        onSuccess: (Int) -> Unit,
         onError: (Exception?) -> Unit
     )
 

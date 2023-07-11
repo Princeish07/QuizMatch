@@ -10,6 +10,7 @@ import com.quizmatch.app.Repository.question.QuestionRepo
 import com.quizmatch.app.data.local.pref.PrefManager
 import com.quizmatch.app.data.model.api.QuestionListResponse
 import com.quizmatch.app.data.model.firebase.Score
+import com.quizmatch.app.data.model.firebase.ScoreDetail
 import com.quizmatch.app.data.model.firebase.User
 import com.quizmatch.app.data.remote.APICallMethods
 import com.quizmatch.app.utils.FirebaseKeys.COMPLETED_DB_KEY
@@ -31,6 +32,8 @@ class QuestionListViewModel @Inject constructor(
     var scoreUpdate = MutableLiveData<Boolean>()
     val questionListResponse = MutableLiveData<QuestionListResponse>()
     val promptMessage = MutableLiveData<Any>()
+    val finalScore = MutableLiveData<ScoreDetail>()
+    val loader = MutableLiveData<Boolean>()
     var questionIndex: Int = 0
     var scoreDetail = MutableLiveData<Score>()
     var opponentUser = MutableLiveData<User>()
@@ -40,49 +43,70 @@ class QuestionListViewModel @Inject constructor(
 
     fun getScoreDetail() {
 
-        firebaseFirestoreDatabase.getScoreDetail(matchId = matchId.value!!, scoreId = prefManager.userProfile?.user_id!!, onSuccess = {
-            scoreDetail.value = it.first()
-            if(prefManager.score > scoreDetail.value?.score!!){
-                //You won
-                promptMessage.value = R.string.you_won
-            }
-            else if (prefManager.score < scoreDetail.value?.score!!){
+        firebaseFirestoreDatabase.getScoreDetail(matchId = matchId.value!!, scoreId =
+        prefManager.userProfile?.user_id!!,
+            onSuccess = {
+                scoreDetail.value = it.first()
+                if(questionIndex > 3) {
+
+                    if (prefManager.score > scoreDetail.value?.score!!) {
+                        //You won
+
+                        finalScore.value = ScoreDetail(
+                            prefManager.score.toString(), opponentScore =
+                            scoreDetail.value?.score!!.toString()
+                        )
+                        prefManager.score = 0
+
+                    } else if (prefManager.score < scoreDetail.value?.score!!) {
 //                //Opponent Won
-                promptMessage.value = R.string.oponent_won
 
-             //   promptMessage.value = "${opponentUser.value?.getFullName()} won"
+                        finalScore.value = ScoreDetail(
+                            prefManager.score.toString(), opponentScore =
+                            scoreDetail.value?.score!!.toString()
+                        )
+                        prefManager.score = 0
 //
-            }else{
-                getQuestionList()
-                //questionIndex = 0
-                // scoreUpdate.value = true
+                    } else {
+                        //questionIndex = 0
+                        scoreUpdate.value = true
+                    }
+                }else {
+                    scoreUpdate.value = true
 
-            }
+                }
+                loader.value =false
 
 
 
 
         }, onError = {
+                loader.value =false
 
         })
     }
     fun getQuestionList() {
+        loader.value = true
 
         questionRepo.getQuestList(apiCallMethods = apiCallMethods,
             firebaseDatabaseRepo = firebaseFirestoreDatabase,
             onSuccess = {
                 questionListResponse.value = it
+                loader.value = false
 
             },
             onError = {
+                loader.value = false
                 promptMessage.value = R.string.question_list_failed
             })
     }
 
-    fun updateScore(score: String) {
-        firebaseFirestoreDatabase.updateScore(matchId = matchId.value!!, score = score, userId = prefManager.userProfile?.user_id!!, onSuccess = {
+    fun updateScore(score: Int) {
+        firebaseFirestoreDatabase.updateScore(matchId = matchId.value!!, score = score, userId =
+        prefManager.userProfile?.user_id!!, onSuccess = {
 
         }, onError = {
+            promptMessage.value = R.string.login_failed
 
         })
     }
@@ -97,22 +121,22 @@ class QuestionListViewModel @Inject constructor(
 
     fun checkAnswer(answer: String) {
         questionIndex++
+        if (answer == questionResult.correct_answer) {
+            prefManager.score = prefManager.score + 5
+            updateScore(prefManager.score)
 
-
-        if(questionIndex > 3){
-            getScoreDetail()
-        }else {
-
-            if (answer == questionResult.correct_answer) {
-                prefManager.score = prefManager.score + 5
-
-
-            } else {
-                prefManager.score = prefManager.score - 2
-                updateScore(prefManager.score.toString())
-            }
-            scoreUpdate.value = true
+        } else {
+            prefManager.score = prefManager.score - 2
+            updateScore(prefManager.score)
         }
+        getScoreDetail()
+
+            //getScoreDetail()
+       // }
+//        else {
+//
+//
+//        }
 
 //        if (questionIndex == 4) {
 //          //  if(prefManager.userProfile?.match_status == INPROGRESS_DB_KEY){

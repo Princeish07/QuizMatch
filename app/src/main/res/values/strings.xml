@@ -27,5 +27,13 @@
     <string name="room_Exits">Room already exist</string>
     <string name="you_won">You won</string>
     <string name="oponent_won">Opponent won</string>
+    <string name="match_completed">Match Completed</string>
+    <string name="your_score">Your Score</string>
+    <string name="_25">25</string>
+    <string name="_14">14</string>
+    <string name="opp_score">Opponent Score</string>
+    <string name="share">Share</string>
+    <string name="sign_in">Sign in</string>
+    <string name="invalid">Not store</string>
 
 </resources>

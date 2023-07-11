@@ -27,9 +27,8 @@ class UserListFragment : Fragment() {
     val mAdapter by lazy { UserListAdapter(viewModel,object : OnItemClickListener{
         override fun onItemClick(position: Int,itemDetail: User) {
             requireActivity().showToast(message = "Clicked Item $position")
+            viewModel.loader.value = true
             viewModel.createMatch(itemDetail)
-//            viewModel.getUserList()
-//            requireActivity().navigateToUserListScreen()
         }
 
     }) }
@@ -50,6 +49,7 @@ class UserListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         showPrompt()
+        showLoader()
         observeUserListResponse()
         observeMatchCreation()
     }
@@ -78,6 +78,17 @@ class UserListFragment : Fragment() {
     fun showPrompt(){
         viewModel.promptMessage.observe(requireActivity()) {it -> it as Int
             this.showToast(resId = it)
+        }
+    }
+
+    fun showLoader(){
+        viewModel.loader.observe(requireActivity()) {it ->
+            if(it){
+                binding.rlProgress.visibility = View.VISIBLE
+            }else{
+                binding.rlProgress.visibility = View.GONE
+
+            }
         }
     }
     fun observeUserListResponse(){

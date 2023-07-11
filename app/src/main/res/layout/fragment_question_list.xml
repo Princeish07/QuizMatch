@@ -15,7 +15,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main_app_color"
     tools:context=".ui.question.QuestionListFragment">
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         android:id="@+id/cv_question"
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="@color/second_primary"
         app:cardCornerRadius="5dp"
         android:elevation="5dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -44,18 +44,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/black"
-            android:gravity="start|top"
-            android:id="@+id/tv_ques_no"
-            android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:text="1"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/tv_question"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textStyle="bold"
             android:gravity="center"
             android:text="What is the national language of india?"/>
@@ -66,6 +56,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@id/cv_question"
         app:layout_constraintStart_toStartOf="@id/glv_01"
@@ -79,6 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textColor="@color/second_primary"
+        android:backgroundTint="@color/grey"
         android:textAllCaps="false"
         app:cornerRadius="5dp"
         android:text="@string/hindi" />
@@ -88,6 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/second_primary"
+            android:backgroundTint="@color/grey"
             android:textAllCaps="false"
             app:cornerRadius="5dp"
             android:text="@string/english" />
@@ -97,7 +92,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/second_primary"
             android:textAllCaps="false"
+            android:backgroundTint="@color/grey"
             app:cornerRadius="5dp"
             android:text="@string/tamil" />
 
@@ -106,6 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textColor="@color/second_primary"
+            android:backgroundTint="@color/grey"
             android:textAllCaps="false"
             app:cornerRadius="5dp"
             android:text="@string/india_don_t_have_nation_language" />
@@ -113,6 +112,27 @@
 
 
 </com.google.android.material.button.MaterialButtonToggleGroup>
-
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rlProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/loaderBackground"
+        android:clickable="true"
+        android:visibility="gone"
+        android:elevation="9dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fitsSystemWindows="true"
+        android:focusable="true">
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_gravity="center"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
     </layout>

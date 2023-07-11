@@ -62,7 +62,17 @@ fun Activity.navigateToUserListScreen(bundle: Bundle = bundleOf()) {
     )
 
 }
+fun Activity.navigateToUserListScreenReplace(bundle: Bundle = bundleOf()) {
+    (this as DashboardActivity).executeNavigation(
+        FragmentNavigationBuilder(UserListFragment())
+            .container(dashboardContainer())
+            .isAddFragment(false)
+            .isBackStack(false)
+            .bundle(bundle)
+            .build()
+    )
 
+}
 /*----------------------------------------------------------------------------------------------*/
 fun dashboardContainer(): Int = R.id.fcv_dashboard
 
