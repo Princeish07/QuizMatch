@@ -20,5 +20,12 @@
     <string name="india_don_t_have_nation_language">India don\'t have nation language</string>
     <string name="tamil">Tamil</string>
     <string name="english">English</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalid_user_list">User List api is not working</string>
+    <string name="unable_create_match">Unable to create match</string>
+    <string name="room_Exits">Room already exist</string>
+    <string name="you_won">You won</string>
+    <string name="oponent_won">Opponent won</string>
 
 </resources>

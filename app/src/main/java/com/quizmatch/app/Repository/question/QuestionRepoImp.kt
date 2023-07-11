@@ -16,7 +16,7 @@ class QuestionRepoImp:QuestionRepo {
         onSuccess: (QuestionListResponse) -> Unit,
         onError: (Exception?) -> Unit
     ){
-        apiCallMethods.getQuestionList(5).enqueue(object : Callback<QuestionListResponse> {
+        apiCallMethods.getQuestionList(12).enqueue(object : Callback<QuestionListResponse> {
             override fun onResponse(
                 call: Call<QuestionListResponse>,
                 response: Response<QuestionListResponse>

@@ -9,6 +9,7 @@ import com.quizmatch.app.R
 import com.quizmatch.app.ui.dashboard.DashboardActivity
 import com.quizmatch.app.ui.landing.LandingActivity
 import com.quizmatch.app.ui.question.QuestionListFragment
+import com.quizmatch.app.ui.userlist.UserListFragment
 
 /*
 * todo Created By Prince at 11/04/23.
@@ -41,8 +42,20 @@ fun Context.routeToLandingActivityScreen(bundle: Bundle = bundleOf()) {
 fun Activity.navigateToQuestionListScreen(bundle: Bundle = bundleOf()) {
     (this as DashboardActivity).executeNavigation(
         FragmentNavigationBuilder(QuestionListFragment())
-            .container(landingContainer())
-            .isAddFragment(false)
+            .container(dashboardContainer())
+            .isAddFragment(true)
+            .isBackStack(true)
+            .bundle(bundle)
+            .build()
+    )
+
+}
+//Method to navigation User List in fragment
+fun Activity.navigateToUserListScreen(bundle: Bundle = bundleOf()) {
+    (this as DashboardActivity).executeNavigation(
+        FragmentNavigationBuilder(UserListFragment())
+            .container(dashboardContainer())
+            .isAddFragment(true)
             .isBackStack(false)
             .bundle(bundle)
             .build()
@@ -50,7 +63,6 @@ fun Activity.navigateToQuestionListScreen(bundle: Bundle = bundleOf()) {
 
 }
 
-
 /*----------------------------------------------------------------------------------------------*/
-fun landingContainer(): Int = R.id.fcv_dashboard
+fun dashboardContainer(): Int = R.id.fcv_dashboard
 

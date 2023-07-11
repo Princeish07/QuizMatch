@@ -65,9 +65,7 @@ import javax.inject.Inject
                         FirebaseKeys.LAST_NAME_DB_KEY to "Sharma",
                         FirebaseKeys.EMAIL_DB_KEY to email,
                         FirebaseKeys.USER_ID_DB_KEY to user?.uid,
-                        FirebaseKeys.MATCH_STATUS_DB_KEY to PENDING_DB_KEY,
-                        FirebaseKeys.OPPONENT_DB_KEY to "",
-                        SCORE_DB_KEY to 0
+                        FirebaseKeys.MATCH_ID_DB_KEY to emptyList<String>()
                     )
                     firebaseDatabaseRepo.createUser(userData, onSuccess = {
                         onSuccess(user)

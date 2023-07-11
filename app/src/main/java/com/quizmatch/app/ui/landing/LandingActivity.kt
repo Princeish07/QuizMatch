@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.quizmatch.app.R
 import com.quizmatch.app.databinding.ActivityLandingBinding
 import com.quizmatch.app.ui.dashboard.DashboardActivity
+import com.quizmatch.app.utils.routeToDashboardActivityScreen
 import com.quizmatch.app.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,12 +39,9 @@ class LandingActivity : AppCompatActivity() {
     }
     fun loggedInSuccess(){
         viewModel.loginSuccess.observe(this){
-            moveUserToDashboardActivity()
+            routeToDashboardActivityScreen()
+            finish()
         }
     }
 
-    fun moveUserToDashboardActivity(){
-        startActivity(Intent(this, DashboardActivity::class.java))
-
-    }
 }

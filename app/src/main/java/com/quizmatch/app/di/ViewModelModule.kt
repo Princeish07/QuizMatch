@@ -8,6 +8,7 @@ import com.quizmatch.app.data.remote.APICallMethods
 import com.quizmatch.app.ui.landing.LandingActivityViewModel
 import com.quizmatch.app.ui.question.QuestionListViewModel
 import com.quizmatch.app.ui.splash.SplashActivityViewModel
+import com.quizmatch.app.ui.userlist.UserListViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,5 +41,13 @@ class ViewModelModule {
             QuestionListViewModel {
         return QuestionListViewModel(apiCallMethods,prefManager,firebaseFirestoreDatabase,
             questionRepo)
+    }
+
+    @Provides
+    @Singleton
+    fun getUserListViewModel( prefManager: PrefManager,
+                                 firebaseFirestoreDatabase: FirebaseDatabaseRepository):
+            UserListViewModel {
+        return UserListViewModel(prefManager,firebaseFirestoreDatabase)
     }
 }

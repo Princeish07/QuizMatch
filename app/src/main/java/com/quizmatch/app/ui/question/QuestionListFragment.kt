@@ -14,6 +14,7 @@ import com.quizmatch.app.R
 import com.quizmatch.app.data.model.api.QuestionListResponse
 import com.quizmatch.app.databinding.FragmentQuestionListBinding
 import com.quizmatch.app.ui.landing.LandingActivityViewModel
+import com.quizmatch.app.utils.Constants.MATCH_ID_KEY
 import com.quizmatch.app.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -41,7 +42,10 @@ class QuestionListFragment : Fragment() {
         showPrompt()
         observeQuestionList()
         observeBool()
+
         viewModel.getQuestionList()
+        viewModel.matchId.value = arguments?.getString(MATCH_ID_KEY) as String
+      //  viewModel.getScoreDetail(arguments?.getString(MATCH_ID_KEY) as String)
 
         binding.myToggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             val checkedButton: MaterialButton? = group.findViewById(checkedId)
@@ -70,6 +74,7 @@ class QuestionListFragment : Fragment() {
         }
     }
     private fun manageView(){
+
         viewModel.questionResult = viewModel.questionListResponse.value?.results?.get(viewModel.questionIndex)!!
         val optionList = viewModel.questionResult.incorrect_answers
         optionList.add(viewModel.questionResult.correct_answer)
@@ -80,7 +85,14 @@ class QuestionListFragment : Fragment() {
                 binding.option3.visibility = View.GONE
                 binding.option4.visibility = View.GONE
 
-            }else {
+            }
+            else if(optionList.count() == 3) {
+                binding.option1.text = optionList.get(0)
+                binding.option2.text = optionList.get(1)
+                binding.option3.text = optionList.get(2)
+                binding.option3.visibility = View.VISIBLE
+                binding.option4.visibility = View.GONE
+            } else{
                 binding.option1.text = optionList.get(0)
                 binding.option2.text = optionList.get(1)
                 binding.option3.text = optionList.get(2)

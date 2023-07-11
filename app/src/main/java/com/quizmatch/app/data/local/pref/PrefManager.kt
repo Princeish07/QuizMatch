@@ -39,7 +39,7 @@ class PrefManager
      */
     var score: Int
         get() = pref!!.getInt(SCORE, 0)!!
-        set(accessToken) {
+        set(score) {
             pref!!.edit().putInt(SCORE, score).apply()
         }
 

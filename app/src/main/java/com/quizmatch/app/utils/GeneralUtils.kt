@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.quizmatch.app.data.model.firebase.User
 import com.quizmatch.app.ui.dashboard.DashboardActivity
 
 
@@ -95,3 +96,8 @@ data class FragmentNavigationBuilder(
 //
 //}
 class CustomException(message: String? = "Something went wrong!!!") : Exception(message)
+
+
+interface OnItemClickListener {
+    fun onItemClick(position: Int,itemDetail: User)
+}
